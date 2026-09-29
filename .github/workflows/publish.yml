@@ -25,6 +25,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm test
+      - name: Stamp the build with what it is
+        shell: bash
+        run: |
+          stamp="$(node -p "require('./package.json').version")+$(git rev-parse --short HEAD)"
+          echo "DSH_WALLPAPER_BRIDGE_BUILD=$stamp" >> "$GITHUB_ENV"
       - run: pnpm build
       - name: The tag must equal the package version
         if: startsWith(github.ref, 'refs/tags/')
