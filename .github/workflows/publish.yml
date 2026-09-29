@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -28,6 +28,7 @@ jobs:
       - run: pnpm build
       - name: The tag must equal the package version
         if: startsWith(github.ref, 'refs/tags/')
+        shell: bash
         run: |
           tag="${GITHUB_REF#refs/tags/v}"
           pkg="$(node -p "require('./package.json').version")"

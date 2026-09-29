@@ -8,7 +8,9 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    # 桥是 Windows 专属的：它用 whoami.exe/icacls.exe 收紧令牌目录的 ACL，测试也断言这些调用与
+    # Windows 路径。放到 Linux runner 上必然失败，这不是缺陷而是事实 —— 所以 CI 与它的目标平台一致。
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
